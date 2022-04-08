@@ -67,31 +67,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     document.getElementById("buttonSUBMIT500").addEventListener("click", function () {
-                  console.log('This is buttonSUBMIT500');
-        });
+        for(let i=0; i < 500; i++){
+            let newData = new DataObject();
 
+            fetch('/AddData', {
+                method: "POST",
+                body: JSON.stringify(newData),
+                headers: {"Content-type": "application/json; charset=UTF-8"}
+                })
+                .then(response => response.json()) 
+                .then(json => console.log(json),
+                createList()
+                )
+                .catch(err => console.log(err));        
+        }
+        });
     });
 
-
-    // document.getElementById("buttonAdd").addEventListener("click", function () {
-    //     let newData = new DataObject();
-
-    //     fetch('/AddData', {
-    //         method: "POST",
-    //         body: JSON.stringify(newData),
-    //         headers: {"Content-type": "application/json; charset=UTF-8"}
-    //         })
-    //         .then(response => response.json()) 
-    //         .then(json => console.log(json),
-    //         createList()
-    //         )
-    //         .catch(err => console.log(err));
-    // });
-
-
-
-
-  
 
 
 // end of wait until document has loaded event  *************************************************************************
@@ -117,7 +109,7 @@ function fillUL(data) {
     DataArray = data;
 
         // clear prior data
-    var divDataList = document.getElementById("divDataList");
+    var divDataList = document.getElementById("divDataListServer");
     while (divDataList.firstChild) {    // remove any old data so don't get duplicates
         divDataList.removeChild(divDataList.firstChild);
     };
