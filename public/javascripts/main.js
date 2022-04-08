@@ -28,6 +28,8 @@ let DataObject = function () {
     this.Date = Date.now();  
 }
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
     
     document.getElementById("buttonCreate").addEventListener("click", function () {
@@ -47,6 +49,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         divDataListClient.appendChild(ul)     
     });
+
+
+
+    document.getElementById("buttonSubmit").addEventListener("click", function () {
+        let newData = new DataObject();  
+        fetch('/AddData', {
+            method: "POST",
+            body: JSON.stringify(newData),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+            })
+            .then(response => response.json()) 
+            .then(json => console.log(json),
+            )
+            .catch(err => console.log(err));
+        });   
+
+
+    document.getElementById("buttonSUBMIT500").addEventListener("click", function () {
+                  console.log('This is buttonSUBMIT500');
+        });
+
+    });
+
+
     // document.getElementById("buttonAdd").addEventListener("click", function () {
     //     let newData = new DataObject();
 
@@ -63,16 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
 
 
-    document.getElementById("buttonSubmit").addEventListener("click", function () {
-        createList();      
-    });
-    document.getElementById("buttonSUBMIT500").addEventListener("click", function () {
-        createList();      
-    });
+
 
   
 
-});  
+
 // end of wait until document has loaded event  *************************************************************************
 
 function deleteText(my_div){
@@ -84,7 +105,7 @@ function deleteText(my_div){
 function createList() {
 // update local array from server
 
-    fetch('/getAllData')
+    fetch('/getAll')
     // Handle success
     .then(response => response.json())  // get the data out of the response object
     .then( responseData => fillUL(responseData))    //update our array and li's
