@@ -6,10 +6,25 @@ let Data_CdID = [123456, 123654, 321456, 321654, 654123, 654321, 543216, 354126,
 
 
 let DataObject = function () {
-    this.ID = 98053//Math.random().toString(16).slice(5)  // tiny chance could get duplicates!
-    this.SalesPersonID = 1;
-    this.CdID = 123456;
-    this.PricePaid = 55555; 
+    this.ID = Data_StoreID[Math.floor(Math.random() * 6)] //98053  //Math.random().toString(16).slice(5)  // tiny chance could get duplicates!
+    
+    if(this.ID == 98053){
+        this.SalesPersonID = Data_SalesPersonID[0][Math.floor(Math.random() * 4)]
+    } else if (this.ID == 98007){
+        this.SalesPersonID = Data_SalesPersonID[1][Math.floor(Math.random() * 4)]
+    } else if (this.ID == 98077){
+        this.SalesPersonID = Data_SalesPersonID[2][Math.floor(Math.random() * 4)]
+    } else if (this.ID == 98055){
+        this.SalesPersonID = Data_SalesPersonID[3][Math.floor(Math.random() * 4)]
+    } else if (this.ID == 98011){
+        this.SalesPersonID = Data_SalesPersonID[4][Math.floor(Math.random() * 4)]
+    } else {
+        this.SalesPersonID = Data_SalesPersonID[5][Math.floor(Math.random() * 4)]
+    }
+    
+    this.CdID = Data_CdID[Math.floor(Math.random() * 10)];
+
+    this.PricePaid = Math.floor(Math.random() * (15 - 5 + 1)) + 5; 
     this.Date = Date.now();  
 }
 
