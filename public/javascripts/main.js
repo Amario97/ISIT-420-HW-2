@@ -4,8 +4,9 @@ let Data_StoreID = [98053 , 98007, 98077, 98055, 98011, 98046];
 let Data_SalesPersonID = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20],[21,22,23,24]];
 let Data_CdID = [123456, 123654, 321456, 321654, 654123, 654321, 543216, 354126, 621453, 623451]
 
-
 let DataObject = function () {
+
+    
     this.ID = Data_StoreID[Math.floor(Math.random() * 6)] //98053  //Math.random().toString(16).slice(5)  // tiny chance could get duplicates!
     
     if(this.ID == 98053){
@@ -25,7 +26,7 @@ let DataObject = function () {
     this.CdID = Data_CdID[Math.floor(Math.random() * 10)];
 
     this.PricePaid = Math.floor(Math.random() * (15 - 5 + 1)) + 5; 
-    this.Date = Date.now();  
+    this.Date = new Date();
 }
 
 
@@ -67,9 +68,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     document.getElementById("buttonSUBMIT500").addEventListener("click", function () {
-        for(let i=0; i < 500; i++){
-            let newData = new DataObject();
-
+        
+        var check = true; 
+        
+        for(let i = 0; i < 500; i++){
+            var newData = new DataObject();
+            if(check === false){
+                newData.Date.setMinutes(newData.Date.getMinutes() + Math.floor(Math.random() * (30 - 5 + 1)) + 5)
+            }
+            check= false
             fetch('/AddData', {
                 method: "POST",
                 body: JSON.stringify(newData),
@@ -77,10 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(response => response.json()) 
                 .then(json => console.log(json),
+                
                 createList()
                 )
-                .catch(err => console.log(err));        
-        }
+                .catch(err => console.log(err));      
+            }
         });
     });
 
