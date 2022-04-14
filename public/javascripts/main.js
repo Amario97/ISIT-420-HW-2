@@ -90,6 +90,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(err => console.log(err));      
             }
         });
+        document.getElementById("buttonDelete").addEventListener("click", function () {
+            deleteSalesPerson(document.getElementById("deleteID").value);      
+        });
     });
 
 
@@ -132,6 +135,18 @@ function fillUL(data) {
         ul.appendChild(li);
     });
     divDataList.appendChild(ul)
+}
+function deleteSalesPerson(SalesPersonID) {
+
+    fetch('/DeleteSalesPerson/' + SalesPersonID, {
+        method: "DELETE",
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      })
+      .then(response => response.json()) 
+      .then(json => console.log(json),
+      createList()
+      )
+      .catch(err => console.log(err));
 }
 
   
