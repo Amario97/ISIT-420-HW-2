@@ -23,8 +23,8 @@ const OrdersSchema = require("../OrdersSchema");
 // edited to include my non-admin, user level account and PW on mongo atlas
 // and also to include the name of the mongo DB that the collection is in (MoviesDB)
 const dbURI =
-  "mongodb+srv://Jorting:12345@mario-cluster.dkxzq.mongodb.net/500Orders?retryWrites=true&w=majority";
-
+  //"mongodb+srv://Jorting:12345@mario-cluster.dkxzq.mongodb.net/500Orders?retryWrites=true&w=majority";
+  "mongodb+srv://JaegyeomKim:qwe941215@cluster0.ipbvb.mongodb.net/Movies?retryWrites=true&w=majority"
   // Make Mongoose use `findOneAndUpdate()`. Note that this option is `true`
 // by default, you need to set it to false.
 mongoose.set('useFindAndModify', false);
@@ -130,5 +130,16 @@ router.delete('/DeleteSalesPerson/:SalesPersonID', function (req, res) {
   });
 });
 
+
+//ID: req.params.ID
+router.get('/FindSalesPerson/:ID', (req, res) => {
+  OrdersSchema.find({ID : req.params.ID})
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+  })
 
 module.exports = router;

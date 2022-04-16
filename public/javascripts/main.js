@@ -67,32 +67,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });   
 
 
-    document.getElementById("buttonSUBMIT500").addEventListener("click", function () {
+        document.getElementById("buttonSUBMIT500").addEventListener("click", function () {
         
-        var check = true; 
-        
-        for(let i = 0; i < 500; i++){
-            var newData = new DataObject();
-            if(check === false){
-                newData.Date.setMinutes(newData.Date.getMinutes() + Math.floor(Math.random() * (30 - 5 + 1)) + 5)
-            }
-            check= false
-            fetch('/AddData', {
-                method: "POST",
-                body: JSON.stringify(newData),
-                headers: {"Content-type": "application/json; charset=UTF-8"}
-                })
-                .then(response => response.json()) 
-                .then(json => console.log(json),
-                
-                createList()
-                )
-                .catch(err => console.log(err));      
-            }
-        });
+            var check = true; 
+            
+            for(let i = 0; i < 5; i++){
+                var newData = new DataObject();
+                if(check === false){
+                    newData.Date.setMinutes(newData.Date.getMinutes() + Math.floor(Math.random() * (30 - 5 + 1)) + 5)
+                }
+                check= false
+                fetch('/AddData', {
+                    method: "POST",
+                    body: JSON.stringify(newData),
+                    headers: {"Content-type": "application/json; charset=UTF-8"}
+                    })
+                    .then(response => response.json()) 
+                    .then(json => console.log(json),
+                    
+                    createList()
+                    )
+                    .catch(err => console.log(err));      
+                }
+            });
+
         document.getElementById("buttonDelete").addEventListener("click", function () {
             deleteSalesPerson(document.getElementById("deleteID").value);      
         });
+
+        document.getElementById("buttonFind").addEventListener("click", function () {
+            findSalesPerson(document.getElementById("Zip").value);  
+        });
+
     });
 
 
@@ -115,6 +121,7 @@ function createList() {
     .catch(err => console.log('Request Failed', err)); // Catch errors
 
 };
+
 
 function fillUL(data) {
     DataArray = data;
@@ -149,4 +156,27 @@ function deleteSalesPerson(SalesPersonID) {
       .catch(err => console.log(err));
 }
 
+function findSalesPerson(ID) {
+
+
+    fetch('/FindSalesPerson/' + ID, {
+        method: "GET",
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      })
+      .then(response => response.json()) 
+      .then(json => console.log(json),
+      createList2(ID)
+      )
+      .catch(err => console.log(err));
+}
+
   
+function createList2(ID) {
+// update local array from server
+
+    fetch('/FindSalesPerson/'+ID)
+    // Handle success
+    .then(response => response.json())  // get the data out of the response object
+    .then( responseData => fillUL(responseData))    //update our array and li's
+    .catch(err => console.log('Request Failed', err)); // Catch errors
+};
