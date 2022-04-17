@@ -133,7 +133,7 @@ router.delete('/DeleteSalesPerson/:SalesPersonID', function (req, res) {
 
 //ID: req.params.ID
 router.get('/FindSalesPerson/:ID', (req, res) => {
-  OrdersSchema.find({ID : req.params.ID})
+  OrdersSchema.find({ID : req.params.ID}).sort({SalesPersonID : 1})
     .then((result) => {
       res.send(result);
     })
