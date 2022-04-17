@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
             var check = true; 
             
-            for(let i = 0; i < 10; i++){
+            for(let i = 0; i < 500; i++){
                 var newData = new DataObject();
                 if(check === false){
                     newData.Date.setMinutes(newData.Date.getMinutes() + Math.floor(Math.random() * (30 - 5 + 1)) + 5)
